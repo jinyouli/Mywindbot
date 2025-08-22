@@ -66,9 +66,32 @@ namespace WindBot.Game.AI.Decks
             Console.WriteLine("Hello jinyou!!!!");
 
             AddExecutor(ExecutorType.SpSummon);
-            AddExecutor(ExecutorType.SummonOrSet);
+            AddExecutor(ExecutorType.Summon);
             AddExecutor(ExecutorType.Repos, DefaultMonsterRepos);
             AddExecutor(ExecutorType.Activate, DefaultField);
+        }
+
+        public override CardPosition OnSelectPosition(int cardId, IList<CardPosition> positions)
+        {
+            return CardPosition.FaceUpAttack;
+        }
+
+
+        public override BattlePhaseAction OnSelectAttackTarget(ClientCard attacker, IList<ClientCard> defenders)
+        {
+            for (int i = 0; i < defenders.Count; ++i)
+            {
+                ClientCard defender = defenders[i];
+                attacker.RealPower = attacker.Attack;
+                defender.RealPower = defender.GetDefensePower();
+                if (!attacker.IsDisabled())
+                    return AI.Attack(attacker, defender);
+            }
+
+            if (attacker.CanDirectAttack && (Enemy.GetMonsterCount() == 0 || !attacker.IsDisabled()))
+                return AI.Attack(attacker, null);
+
+            return null;
         }
 
         public override int OnRockPaperScissors()
