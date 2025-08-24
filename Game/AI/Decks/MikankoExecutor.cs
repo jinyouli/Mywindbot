@@ -46,7 +46,7 @@ namespace WindBot.Game.AI.Decks
           public const int 罕银铠甲 = 33114323;
           public const int 天子的指轮 = 40678060;
           public const int 御巫的水舞蹈 = 43527730;
-          public const int 御巫舞踊迷惑鸟 = 57736667;
+          public const int MikankoBird = 57736667;
           public const int 御巫的诱轮舞 = 79912449;
           public const int 御巫的火丛舞 = 80044027;
           public const int 御巫神隐 = 53174748;
@@ -70,8 +70,9 @@ namespace WindBot.Game.AI.Decks
             Console.WriteLine("Hello jinyou!!!!");
             //counter
             AddExecutor(ExecutorType.Activate, CardId.AshBlossom, AshBlossomActivate);
-            AddExecutor(ExecutorType.Activate, CardId.MaxxC, MaxxCActivate);
+            AddExecutor(ExecutorType.Activate, CardId.MaxxC, DefaultMaxxC);
             AddExecutor(ExecutorType.Activate, CardId.NibiruThePrimalBeing, NibiruThePrimalBeingActivate);
+            AddExecutor(ExecutorType.Activate, CardId.MikankoBird, MikankoBirdEffect);
 
             AddExecutor(ExecutorType.SpSummon);
             AddExecutor(ExecutorType.SpSummon, CardId.AshBlossom, AshBlossomSpSummon);
@@ -79,13 +80,65 @@ namespace WindBot.Game.AI.Decks
             AddExecutor(ExecutorType.Summon);
             AddExecutor(ExecutorType.Summon, CardId.AshBlossom, AshBlossomSummon);
             AddExecutor(ExecutorType.Summon, CardId.OldMan, OldManSummon);
+            AddExecutor(ExecutorType.Summon, CardId.NibiruThePrimalBeing, NibiruThePrimalBeingSummon);
 
             AddExecutor(ExecutorType.Activate, DefaultField);
         }
 
+        private bool NibiruThePrimalBeingSummon()
+        {
+            return false;
+        }
+
+        private bool MikankoBirdEffect()
+        {
+            Console.WriteLine(Duel.Phase);
+            if (Duel.Phase == DuelPhase.BattleStart)
+            {
+                
+
+                Console.WriteLine("测试。。。1");
+                if (Enemy.GetMonsterCount() > 0)
+                {
+                    Console.WriteLine("测试。。。2");
+                    AI.SelectCard(Enemy.GetMonsters());
+                    return true;
+                }
+
+
+                ClientCard target = null;
+                foreach (ClientCard card in Enemy.GetSpells())
+                {
+                    if (card != null)
+                    {
+                        target = card;
+                    }
+                }
+
+                Console.WriteLine("测试。。。3");
+                if (target != null)
+                {
+                    Console.WriteLine("测试。。。4");
+                    AI.SelectCard(target);
+                    return true;
+                }
+                Console.WriteLine("测试。。。5");
+            }
+            else{
+                if(Bot.GetMonsters().Count == 0){
+                    return false;
+                }
+                
+            }
+
+            return false;
+
+
+            
+        }
+
         public bool MaxxCActivate()
         {
-            Console.WriteLine("增殖的G = ",Duel.LastChainPlayer);
             if (CheckWhetherNegated(true) || Duel.LastChainPlayer == 0) return false;
             return DefaultMaxxC();
         }
@@ -342,8 +395,8 @@ namespace WindBot.Game.AI.Decks
                     return Bot.GetRemainingCount(CardId.天子的指轮, 1);
                 case CardId.御巫的水舞蹈:
                     return Bot.GetRemainingCount(CardId.御巫的水舞蹈, 2);
-                case CardId.御巫舞踊迷惑鸟:
-                    return Bot.GetRemainingCount(CardId.御巫舞踊迷惑鸟, 2);
+                case CardId.MikankoBird:
+                    return Bot.GetRemainingCount(CardId.MikankoBird, 2);
                 case CardId.御巫的诱轮舞:
                     return Bot.GetRemainingCount(CardId.御巫的诱轮舞, 1);
                 case CardId.御巫的火丛舞:
