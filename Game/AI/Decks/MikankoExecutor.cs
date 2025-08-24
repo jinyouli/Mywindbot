@@ -36,9 +36,9 @@ namespace WindBot.Game.AI.Decks
           public const int 雷击坏兽雷鸣龙王 = 48770333;
           public const int 熔岩魔神 = 102380;
           
-          public const int 珠之御巫狐理 = 6327734;
-          public const int 御巫奉佐那伎 = 11161666;
-          public const int 剑之御巫波礼 = 18377261;
+          public const int MiGreen = 6327734;
+          public const int MiEarth = 11161666;
+          public const int MiRed = 18377261;
           public const int 大日女之御巫 = 81260679;
           public const int 御巫神舞二贵子 = 84550369;
           public const int 仪式的准备 = 96729612;
@@ -70,7 +70,7 @@ namespace WindBot.Game.AI.Decks
             Console.WriteLine("Hello jinyou!!!!");
             //counter
             AddExecutor(ExecutorType.Activate, CardId.AshBlossom, AshBlossomActivate);
-            AddExecutor(ExecutorType.Activate, CardId.MaxxC, DefaultMaxxC);
+            AddExecutor(ExecutorType.Activate, CardId.MaxxC, MaxxCActivate);
             AddExecutor(ExecutorType.Activate, CardId.NibiruThePrimalBeing, NibiruThePrimalBeingActivate);
             AddExecutor(ExecutorType.Activate, CardId.MikankoBird, MikankoBirdEffect);
 
@@ -92,19 +92,13 @@ namespace WindBot.Game.AI.Decks
 
         private bool MikankoBirdEffect()
         {
-            Console.WriteLine(Duel.Phase);
             if (Duel.Phase == DuelPhase.BattleStart)
             {
-                
-
-                Console.WriteLine("测试。。。1");
                 if (Enemy.GetMonsterCount() > 0)
                 {
-                    Console.WriteLine("测试。。。2");
                     AI.SelectCard(Enemy.GetMonsters());
                     return true;
                 }
-
 
                 ClientCard target = null;
                 foreach (ClientCard card in Enemy.GetSpells())
@@ -115,32 +109,30 @@ namespace WindBot.Game.AI.Decks
                     }
                 }
 
-                Console.WriteLine("测试。。。3");
                 if (target != null)
                 {
-                    Console.WriteLine("测试。。。4");
                     AI.SelectCard(target);
                     return true;
                 }
-                Console.WriteLine("测试。。。5");
             }
             else{
                 if(Bot.GetMonsters().Count == 0){
                     return false;
                 }
-                
             }
-
             return false;
-
-
-            
         }
 
         public bool MaxxCActivate()
         {
-            if (CheckWhetherNegated(true) || Duel.LastChainPlayer == 0) return false;
-            return DefaultMaxxC();
+            Console.WriteLine("增殖 =");
+            Console.WriteLine(Duel.LastChainPlayer);
+            if (CheckWhetherNegated(true) || Duel.LastChainPlayer == -1) 
+            {
+                return false;
+            }else{
+                return DefaultMaxxC();
+            }
         }
 
         /// <summary>
@@ -186,8 +178,20 @@ namespace WindBot.Game.AI.Decks
 
         public bool AshBlossomActivate()
         {
+            Console.WriteLine("灰流丽。。。1");
             if (CheckWhetherNegated() || !CheckLastChainShouldNegated()) return false;
+
+            Console.WriteLine("灰流丽。。。2");
             if (Util.GetLastChainCard().IsCode(_CardId.MaxxC)) return false;
+
+            Console.WriteLine("灰流丽。。。3");
+            Console.WriteLine(Duel.LastChainPlayer);
+            if (Duel.LastChainPlayer == -1) 
+            {
+                Console.WriteLine("不执行");
+                return false;
+            }
+
             if (DefaultAshBlossomAndJoyousSpring())
             {
                 ClientCard lastChainCard = Util.GetLastChainCard();
@@ -373,12 +377,12 @@ namespace WindBot.Game.AI.Decks
                     return Bot.GetRemainingCount(CardId.OldMan, 1);
                 case CardId.AshBlossom:
                     return Bot.GetRemainingCount(CardId.AshBlossom, 3);
-                case CardId.珠之御巫狐理:
-                    return Bot.GetRemainingCount(CardId.珠之御巫狐理, 2);
-                case CardId.御巫奉佐那伎:
-                    return Bot.GetRemainingCount(CardId.御巫奉佐那伎, 2);
-                case CardId.剑之御巫波礼:
-                    return Bot.GetRemainingCount(CardId.剑之御巫波礼, 2);
+                case CardId.MiGreen:
+                    return Bot.GetRemainingCount(CardId.MiGreen, 2);
+                case CardId.MiEarth:
+                    return Bot.GetRemainingCount(CardId.MiEarth, 2);
+                case CardId.MiRed:
+                    return Bot.GetRemainingCount(CardId.MiRed, 2);
                 case CardId.MaxxC:
                     return Bot.GetRemainingCount(CardId.MaxxC, 3);
                 case CardId.大日女之御巫:
