@@ -111,7 +111,6 @@ namespace WindBot.Game.AI.Decks
             AddExecutor(ExecutorType.Summon, CardId.OldMan, OldManSummon);
             AddExecutor(ExecutorType.Summon, CardId.NibiruThePrimalBeing, NibiruThePrimalBeingSummon);
 
-            AddExecutor(ExecutorType.Activate, DefaultField);
         }
 
         private bool NibiruThePrimalBeingSummon()
