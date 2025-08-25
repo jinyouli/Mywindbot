@@ -31,29 +31,29 @@ namespace WindBot.Game.AI.Decks
           public const int AlbionTheShroudedDragon = 25451383;
           public const int SkillDrain = 82732705;
 
-            //main code
-            public const int 坏星坏兽席兹奇埃鲁 = 63941210;
-          public const int 雷击坏兽雷鸣龙王 = 48770333;
-          public const int 熔岩魔神 = 102380;
+          //main code
+          public const int HuaishouQiailu = 63941210;
+          public const int Huaishoulongwang = 48770333;
+          public const int Rongyanmoshen = 102380;
           
           public const int MiGreen = 6327734;
           public const int MiEarth = 11161666;
           public const int MiRed = 18377261;
-          public const int 大日女之御巫 = 81260679;
-          public const int 御巫神舞二贵子 = 84550369;
-          public const int 仪式的准备 = 96729612;
-          public const int 传承的大御巫 = 44649322;
-          public const int 罕银铠甲 = 33114323;
-          public const int 天子的指轮 = 40678060;
-          public const int 御巫的水舞蹈 = 43527730;
+          public const int Yuwudarinv = 81260679;
+          public const int Yuwuerguizi = 84550369;
+          public const int Yishizhunbei = 96729612;
+          public const int Yuwuchuancheng = 44649322;
+          public const int Hanyinkaijia = 33114323;
+          public const int Tianzizhilun = 40678060;
+          public const int Yuwushuiwudao = 43527730;
           public const int MikankoBird = 57736667;
-          public const int 御巫的诱轮舞 = 79912449;
-          public const int 御巫的火丛舞 = 80044027;
-          public const int 御巫神隐 = 53174748;
-          public const int 御巫神较 = 78199891;
+          public const int Yuwuroulunwu = 79912449;
+          public const int Yuwuhuocongwu = 80044027;
+          public const int Yuwushenyin = 53174748;
+          public const int Yuwushenjiao = 78199891;
 
           //extra code
-          public const int 贵日女之御巫 = 57566760;
+          public const int Yuwuguirinv = 57566760;
 
         }
         
@@ -73,6 +73,35 @@ namespace WindBot.Game.AI.Decks
             AddExecutor(ExecutorType.Activate, CardId.MaxxC, MaxxCActivate);
             AddExecutor(ExecutorType.Activate, CardId.NibiruThePrimalBeing, NibiruThePrimalBeingActivate);
             AddExecutor(ExecutorType.Activate, CardId.MikankoBird, MikankoBirdEffect);
+
+            AddExecutor(ExecutorType.Activate, CardId.NaturalBeast , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.NaturalExterio , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.ImperialOrder , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.SwordsmanLV7 , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.RoyalDecree , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.OldMan , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.AlbionTheShroudedDragon , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.SkillDrain , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.HuaishouQiailu , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.Huaishoulongwang , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.Rongyanmoshen , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.MiGreen , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.MiEarth , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.MiRed , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.Yuwudarinv , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.Yuwuerguizi , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.Yishizhunbei , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.Yuwuchuancheng , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.Hanyinkaijia , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.Tianzizhilun , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.Yuwushuiwudao , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.Yuwuroulunwu , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.Yuwuhuocongwu , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.Yuwushenyin , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.Yuwushenjiao , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.Yuwuguirinv , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.Number41BagooskatheTerriblyTiredTapir , DefaultField);
+
 
             AddExecutor(ExecutorType.SpSummon);
             AddExecutor(ExecutorType.SpSummon, CardId.AshBlossom, AshBlossomSpSummon);
@@ -117,10 +146,10 @@ namespace WindBot.Game.AI.Decks
             }
             else{
                 if(Bot.GetMonsters().Count == 0){
-                    return false;
+                    return DefaultField();;
                 }
             }
-            return false;
+            return DefaultField();
         }
 
         public bool MaxxCActivate()
@@ -178,17 +207,12 @@ namespace WindBot.Game.AI.Decks
 
         public bool AshBlossomActivate()
         {
-            Console.WriteLine("灰流丽。。。1");
             if (CheckWhetherNegated() || !CheckLastChainShouldNegated()) return false;
 
-            Console.WriteLine("灰流丽。。。2");
             if (Util.GetLastChainCard().IsCode(_CardId.MaxxC)) return false;
 
-            Console.WriteLine("灰流丽。。。3");
-            Console.WriteLine(Duel.LastChainPlayer);
             if (Duel.LastChainPlayer == -1) 
             {
-                Console.WriteLine("不执行");
                 return false;
             }
 
@@ -248,11 +272,6 @@ namespace WindBot.Game.AI.Decks
         public bool CheckNumber41(ClientCard card)
         {
             return card != null && card.IsFaceup() && card.IsCode(CardId.Number41BagooskatheTerriblyTiredTapir) && card.IsDefense() && !card.IsDisabled();
-        }
-
-        public bool G_activate()
-        {
-            return (Duel.Player == 0) && !DefaultCheckWhetherCardIsNegated(Card);
         }
 
         public bool NibiruThePrimalBeingActivate()
@@ -367,12 +386,12 @@ namespace WindBot.Game.AI.Decks
             {
                 case CardId.NibiruThePrimalBeing:
                     return Bot.GetRemainingCount(CardId.NibiruThePrimalBeing, 1);
-                case CardId.坏星坏兽席兹奇埃鲁:
-                    return Bot.GetRemainingCount(CardId.坏星坏兽席兹奇埃鲁, 1);
-                case CardId.雷击坏兽雷鸣龙王:
-                    return Bot.GetRemainingCount(CardId.雷击坏兽雷鸣龙王, 1);
-                case CardId.熔岩魔神:
-                    return Bot.GetRemainingCount(CardId.熔岩魔神, 1);
+                case CardId.HuaishouQiailu:
+                    return Bot.GetRemainingCount(CardId.HuaishouQiailu, 1);
+                case CardId.Huaishoulongwang:
+                    return Bot.GetRemainingCount(CardId.Huaishoulongwang, 1);
+                case CardId.Rongyanmoshen:
+                    return Bot.GetRemainingCount(CardId.Rongyanmoshen, 1);
                 case CardId.OldMan:
                     return Bot.GetRemainingCount(CardId.OldMan, 1);
                 case CardId.AshBlossom:
@@ -385,30 +404,30 @@ namespace WindBot.Game.AI.Decks
                     return Bot.GetRemainingCount(CardId.MiRed, 2);
                 case CardId.MaxxC:
                     return Bot.GetRemainingCount(CardId.MaxxC, 3);
-                case CardId.大日女之御巫:
-                    return Bot.GetRemainingCount(CardId.大日女之御巫, 2);
-                case CardId.御巫神舞二贵子:
-                    return Bot.GetRemainingCount(CardId.御巫神舞二贵子, 2);
-                case CardId.仪式的准备:
-                    return Bot.GetRemainingCount(CardId.仪式的准备, 2);
-                case CardId.传承的大御巫:
-                    return Bot.GetRemainingCount(CardId.传承的大御巫, 2);
-                case CardId.罕银铠甲:
-                    return Bot.GetRemainingCount(CardId.罕银铠甲, 2);
-                case CardId.天子的指轮:
-                    return Bot.GetRemainingCount(CardId.天子的指轮, 1);
-                case CardId.御巫的水舞蹈:
-                    return Bot.GetRemainingCount(CardId.御巫的水舞蹈, 2);
+                case CardId.Yuwudarinv:
+                    return Bot.GetRemainingCount(CardId.Yuwudarinv, 2);
+                case CardId.Yuwuerguizi:
+                    return Bot.GetRemainingCount(CardId.Yuwuerguizi, 2);
+                case CardId.Yishizhunbei:
+                    return Bot.GetRemainingCount(CardId.Yishizhunbei, 2);
+                case CardId.Yuwuchuancheng:
+                    return Bot.GetRemainingCount(CardId.Yuwuchuancheng, 2);
+                case CardId.Hanyinkaijia:
+                    return Bot.GetRemainingCount(CardId.Hanyinkaijia, 2);
+                case CardId.Tianzizhilun:
+                    return Bot.GetRemainingCount(CardId.Tianzizhilun, 1);
+                case CardId.Yuwushuiwudao:
+                    return Bot.GetRemainingCount(CardId.Yuwushuiwudao, 2);
                 case CardId.MikankoBird:
                     return Bot.GetRemainingCount(CardId.MikankoBird, 2);
-                case CardId.御巫的诱轮舞:
-                    return Bot.GetRemainingCount(CardId.御巫的诱轮舞, 1);
-                case CardId.御巫的火丛舞:
-                    return Bot.GetRemainingCount(CardId.御巫的火丛舞, 1);
-                case CardId.御巫神隐:
-                    return Bot.GetRemainingCount(CardId.御巫神隐, 1);
-                case CardId.御巫神较:
-                    return Bot.GetRemainingCount(CardId.御巫神较, 1);
+                case CardId.Yuwuroulunwu:
+                    return Bot.GetRemainingCount(CardId.Yuwuroulunwu, 1);
+                case CardId.Yuwuhuocongwu:
+                    return Bot.GetRemainingCount(CardId.Yuwuhuocongwu, 1);
+                case CardId.Yuwushenyin:
+                    return Bot.GetRemainingCount(CardId.Yuwushenyin, 1);
+                case CardId.Yuwushenjiao:
+                    return Bot.GetRemainingCount(CardId.Yuwushenjiao, 1);
                 default:
                     return 0;
             }
