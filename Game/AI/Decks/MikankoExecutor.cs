@@ -110,7 +110,13 @@ namespace WindBot.Game.AI.Decks
             AddExecutor(ExecutorType.Summon, CardId.AshBlossom, AshBlossomSummon);
             AddExecutor(ExecutorType.Summon, CardId.OldMan, OldManSummon);
             AddExecutor(ExecutorType.Summon, CardId.NibiruThePrimalBeing, NibiruThePrimalBeingSummon);
+            AddExecutor(ExecutorType.Summon, CardId.MaxxC, MaxxCSummon);
 
+        }
+
+        private bool MaxxCSummon()
+        {
+            return false;
         }
 
         private bool NibiruThePrimalBeingSummon()
@@ -145,7 +151,7 @@ namespace WindBot.Game.AI.Decks
             }
             else{
                 if(Bot.GetMonsters().Count == 0){
-                    return DefaultField();;
+                    return false;
                 }
             }
             return DefaultField();
@@ -153,8 +159,6 @@ namespace WindBot.Game.AI.Decks
 
         public bool MaxxCActivate()
         {
-            Console.WriteLine("增殖 =");
-            Console.WriteLine(Duel.LastChainPlayer);
             if (CheckWhetherNegated(true) || Duel.LastChainPlayer == -1) 
             {
                 return false;
