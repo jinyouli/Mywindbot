@@ -128,13 +128,22 @@ namespace WindBot.Game.AI.Decks
         {
             if (Duel.Phase == DuelPhase.BattleStart)
             {
-                if (Enemy.GetMonsterCount() > 0)
-                {
-                    AI.SelectCard(Enemy.GetMonsters());
-                    return true;
-                }
 
                 ClientCard target = null;
+                List<ClientCard> enemy_monsters = Enemy.GetMonsters();
+                foreach(ClientCard card in enemy_monsters)
+                {
+                    if (card != null && !card.IsCode(CardId.Huaishoulongwang) && !card.IsCode(CardId.HuaishouQiailu) && !card.IsCode(CardId.Rongyanmoshen) && !card.IsCode(CardId.OldMan))
+                    {
+                        target = card;
+                    }
+                }
+                if (target != null)
+                {
+                    AI.SelectCard(target);
+                    return true;
+                }
+                
                 foreach (ClientCard card in Enemy.GetSpells())
                 {
                     if (card != null)
@@ -148,6 +157,7 @@ namespace WindBot.Game.AI.Decks
                     AI.SelectCard(target);
                     return true;
                 }
+                return false;
             }
             else{
                 if(Bot.GetMonsters().Count == 0){
