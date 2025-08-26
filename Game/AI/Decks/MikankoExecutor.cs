@@ -86,17 +86,17 @@ namespace WindBot.Game.AI.Decks
             AddExecutor(ExecutorType.Activate, CardId.Huaishoulongwang , DefaultField);
             AddExecutor(ExecutorType.Activate, CardId.Rongyanmoshen , DefaultField);
             AddExecutor(ExecutorType.Activate, CardId.MiGreen , DefaultField);
-            AddExecutor(ExecutorType.Activate, CardId.MiEarth , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.MiEarth , MiEarthEffect);
             AddExecutor(ExecutorType.Activate, CardId.MiRed , DefaultField);
             AddExecutor(ExecutorType.Activate, CardId.Yuwudarinv , DefaultField);
             AddExecutor(ExecutorType.Activate, CardId.Yuwuerguizi , DefaultField);
             AddExecutor(ExecutorType.Activate, CardId.Yishizhunbei , DefaultField);
             AddExecutor(ExecutorType.Activate, CardId.Yuwuchuancheng , DefaultField);
-            AddExecutor(ExecutorType.Activate, CardId.Hanyinkaijia , DefaultField);
-            AddExecutor(ExecutorType.Activate, CardId.Tianzizhilun , DefaultField);
-            AddExecutor(ExecutorType.Activate, CardId.Yuwushuiwudao , DefaultField);
-            AddExecutor(ExecutorType.Activate, CardId.Yuwuroulunwu , DefaultField);
-            AddExecutor(ExecutorType.Activate, CardId.Yuwuhuocongwu , DefaultField);
+            AddExecutor(ExecutorType.Activate, CardId.Hanyinkaijia , SpellActive);
+            AddExecutor(ExecutorType.Activate, CardId.Tianzizhilun , SpellActive);
+            AddExecutor(ExecutorType.Activate, CardId.Yuwushuiwudao , SpellActive);
+            AddExecutor(ExecutorType.Activate, CardId.Yuwuroulunwu , SpellActive);
+            AddExecutor(ExecutorType.Activate, CardId.Yuwuhuocongwu , SpellActive);
             AddExecutor(ExecutorType.Activate, CardId.Yuwushenyin , DefaultField);
             AddExecutor(ExecutorType.Activate, CardId.Yuwushenjiao , DefaultField);
             AddExecutor(ExecutorType.Activate, CardId.Yuwuguirinv , DefaultField);
@@ -114,6 +114,15 @@ namespace WindBot.Game.AI.Decks
 
         }
 
+        private bool SpellActive()
+        {
+            if(Bot.GetMonsters().Count == 0){
+                return false;
+            }
+
+            return DefaultField();
+        }
+
         private bool MaxxCSummon()
         {
             return false;
@@ -122,6 +131,15 @@ namespace WindBot.Game.AI.Decks
         private bool NibiruThePrimalBeingSummon()
         {
             return false;
+        }
+
+        private bool MiEarthEffect()
+        {
+            if (ActivateDescription == Util.GetStringId(CardId.MiEarth, 0)){
+                return false;
+            }
+
+            return DefaultField();
         }
 
         private bool MikankoBirdEffect()
