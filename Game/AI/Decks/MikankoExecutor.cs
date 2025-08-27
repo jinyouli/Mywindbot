@@ -92,7 +92,7 @@ namespace WindBot.Game.AI.Decks
             ClientCard card = null;
             foreach (ClientCard monster in Enemy.GetMonsters())
             {
-                if (monster.Attack > attack) {
+                if (monster.Attack>attack && !monster.IsCode(CardId.HuaishouQiailu) && !monster.IsCode(CardId.Huaishoulongwang) && !monster.IsCode(CardId.OldMan) ) {
                     attack = monster.Attack;
                     card = monster;
                 }
