@@ -59,10 +59,6 @@ namespace WindBot.Game.AI.Decks
             AddExecutor(ExecutorType.Activate, CardId.AshBlossom, AshBlossomActivate);
             AddExecutor(ExecutorType.Activate, CardId.MaxxC, MaxxCActivate);
             AddExecutor(ExecutorType.Activate, CardId.MikankoBird, MikankoBirdEffect);
-            AddExecutor(ExecutorType.Activate, CardId.OldMan , DefaultField);
-
-            AddExecutor(ExecutorType.Activate, CardId.HuaishouQiailu , DefaultField);
-            AddExecutor(ExecutorType.Activate, CardId.Huaishoulongwang , DefaultField);
             AddExecutor(ExecutorType.Activate, CardId.MiGreen , DefaultField);
             AddExecutor(ExecutorType.Activate, CardId.MiEarth , MiEarthEffect);
             AddExecutor(ExecutorType.Activate, CardId.MiRed , DefaultField);
@@ -77,14 +73,38 @@ namespace WindBot.Game.AI.Decks
             AddExecutor(ExecutorType.Activate, CardId.Yuwuguirinv , DefaultField);
 
 
-            AddExecutor(ExecutorType.SpSummon);
-            AddExecutor(ExecutorType.SpSummon, CardId.AshBlossom, AshBlossomSpSummon);
+            AddExecutor(ExecutorType.SpSummon, CardId.HuaishouQiailu , HuaishouSpsummon);
+            AddExecutor(ExecutorType.SpSummon, CardId.Huaishoulongwang , HuaishouSpsummon);
+            AddExecutor(ExecutorType.SpSummon, CardId.OldMan , HuaishouSpsummon);
 
             AddExecutor(ExecutorType.Summon);
-            AddExecutor(ExecutorType.Summon, CardId.AshBlossom, AshBlossomSummon);
-            AddExecutor(ExecutorType.Summon, CardId.OldMan, OldManSummon);
-            AddExecutor(ExecutorType.Summon, CardId.MaxxC, MaxxCSummon);
+            AddExecutor(ExecutorType.Summon, CardId.MaxxC, NoSummon);
+            AddExecutor(ExecutorType.Summon, CardId.AshBlossom, NoSummon);
+            AddExecutor(ExecutorType.Summon, CardId.OldMan, NoSummon);
+            AddExecutor(ExecutorType.Summon, CardId.HuaishouQiailu, NoSummon);
+            AddExecutor(ExecutorType.Summon, CardId.Huaishoulongwang, NoSummon);
 
+        }
+
+        private bool HuaishouSpsummon()
+        {
+            int attack = 0;
+            ClientCard card = null;
+            foreach (ClientCard monster in Enemy.GetMonsters())
+            {
+                if (monster.Attack > attack) {
+                    attack = monster.Attack;
+                    card = monster;
+                }
+            }
+
+            if (card != null)
+            {
+                AI.SelectCard(card);
+                return true;
+            }
+
+            return false;
         }
 
         private bool SpellActive()
@@ -224,20 +244,11 @@ namespace WindBot.Game.AI.Decks
             return false;
         }
 
-        private bool OldManSummon()
+        private bool NoSummon()
         {
             return false;
         }
 
-        private bool AshBlossomSummon()
-        {
-            return false;
-        }
-
-        private bool AshBlossomSpSummon()
-        {
-            return false;
-        }
 
         /// <summary>
         /// Whether spell or trap will be negate. If so, return true.
