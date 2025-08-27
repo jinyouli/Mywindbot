@@ -72,7 +72,7 @@ namespace WindBot.Game.AI.Decks
             AddExecutor(ExecutorType.Activate, CardId.Yuwushenjiao , DefaultField);
             AddExecutor(ExecutorType.Activate, CardId.Yuwuguirinv , DefaultField);
 
-
+            AddExecutor(ExecutorType.SpSummon, CardId.Yuwuguirinv);
             AddExecutor(ExecutorType.SpSummon, CardId.HuaishouQiailu , HuaishouSpsummon);
             AddExecutor(ExecutorType.SpSummon, CardId.Huaishoulongwang , HuaishouSpsummon);
             AddExecutor(ExecutorType.SpSummon, CardId.OldMan , HuaishouSpsummon);
