@@ -329,7 +329,11 @@ namespace WindBot.Game.AI.Decks
         public override BattlePhaseAction OnSelectAttackTarget(ClientCard attacker, IList<ClientCard> defenders)
         {
 
-            if (attacker.IsCode(CardId.MiEarth) || attacker.IsCode(CardId.MiGreen) || attacker.IsCode(CardId.MiRed)) {
+            if (attacker.IsCode(CardId.MiEarth)) {
+                return null;
+            }
+
+            if (attacker.IsCode(CardId.MiGreen) || attacker.IsCode(CardId.MiRed)) {
                 if(attacker.EquipCards.Count() == 0){
                     return null;
                 }
