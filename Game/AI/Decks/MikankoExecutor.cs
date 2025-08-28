@@ -379,15 +379,15 @@ namespace WindBot.Game.AI.Decks
                 case CardId.OldMan:
                     return Bot.GetRemainingCount(CardId.OldMan, 2);
                 case CardId.AshBlossom:
-                    return Bot.GetRemainingCount(CardId.AshBlossom, 2);
+                    return Bot.GetRemainingCount(CardId.AshBlossom, 3);
                 case CardId.MiGreen:
                     return Bot.GetRemainingCount(CardId.MiGreen, 3);
                 case CardId.MiEarth:
                     return Bot.GetRemainingCount(CardId.MiEarth, 3);
                 case CardId.MiRed:
-                    return Bot.GetRemainingCount(CardId.MiRed, 2);
+                    return Bot.GetRemainingCount(CardId.MiRed, 3);
                 case CardId.MaxxC:
-                    return Bot.GetRemainingCount(CardId.MaxxC, 2);
+                    return Bot.GetRemainingCount(CardId.MaxxC, 1);
                 case CardId.Yuwudarinv:
                     return Bot.GetRemainingCount(CardId.Yuwudarinv, 3);
                 case CardId.Yuwuerguizi:
