@@ -130,6 +130,32 @@ namespace WindBot.Game.AI.Decks
             return DefaultField();
         }
 
+        public bool CheckCanBeTargeted(ClientCard card)
+        {
+            if (card.IsShouldNotBeTarget()) {
+                Console.WriteLine("测。。。1");
+                return false;
+            }
+
+            if (card.IsShouldNotBeMonsterTarget())
+            {
+                Console.WriteLine("测。。。2");
+                return false;
+            }
+
+            if (card.IsShouldNotBeSpellTrapTarget()) {
+                Console.WriteLine("测。。。3");
+                return false;
+            }
+
+            if (card.IsShouldNotBeSpellTrapTarget())
+            {
+                Console.WriteLine("测。。。4");
+                return false;
+            } 
+            return true;
+        }
+
         private bool MikankoBirdEffect()
         {
             if (Duel.Phase == DuelPhase.BattleStart)
@@ -139,27 +165,41 @@ namespace WindBot.Game.AI.Decks
                 List<ClientCard> enemy_monsters = Enemy.GetMonsters();
                 foreach(ClientCard card in enemy_monsters)
                 {
-                    if (card != null && !card.IsCode(CardId.Huaishoulongwang) && !card.IsCode(CardId.HuaishouQiailu) && !card.IsCode(CardId.OldMan))
+                    if (card != null && CheckCanBeTargeted(card) && !card.IsCode(CardId.Huaishoulongwang) && !card.IsCode(CardId.HuaishouQiailu) && !card.IsCode(CardId.OldMan))
                     {
                         target = card;
                     }
                 }
+                Console.WriteLine("测试。。。1");
                 if (target != null)
                 {
+               
+                    Console.WriteLine(target.GetOriginCode());
+                   
                     AI.SelectCard(target);
+
+                    if (AI.HaveSelectedCards())
+                    {
+                        Console.WriteLine("已选择");
+                    }else{
+                        Console.WriteLine("未选择");
+                    }
                     return true;
                 }
                 
+                Console.WriteLine("测试。。。2");
                 foreach (ClientCard card in Enemy.GetSpells())
                 {
-                    if (card != null)
+                    if (card != null && !card.IsShouldNotBeTarget())
                     {
                         target = card;
                     }
                 }
 
+                Console.WriteLine("测试。。。3");
                 if (target != null)
                 {
+                    
                     AI.SelectCard(target);
                     return true;
                 }
@@ -170,6 +210,7 @@ namespace WindBot.Game.AI.Decks
                     return false;
                 }
             }
+            Console.WriteLine("测试。。。4");
             return DefaultField();
         }
 
