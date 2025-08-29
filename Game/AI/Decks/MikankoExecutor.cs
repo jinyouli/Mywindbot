@@ -133,24 +133,20 @@ namespace WindBot.Game.AI.Decks
         public bool CheckCanBeTargeted(ClientCard card)
         {
             if (card.IsShouldNotBeTarget()) {
-                Console.WriteLine("测。。。1");
                 return false;
             }
 
             if (card.IsShouldNotBeMonsterTarget())
             {
-                Console.WriteLine("测。。。2");
                 return false;
             }
 
             if (card.IsShouldNotBeSpellTrapTarget()) {
-                Console.WriteLine("测。。。3");
                 return false;
             }
 
             if (card.IsShouldNotBeSpellTrapTarget())
             {
-                Console.WriteLine("测。。。4");
                 return false;
             } 
             return true;
@@ -160,8 +156,20 @@ namespace WindBot.Game.AI.Decks
         {
             if (Duel.Phase == DuelPhase.BattleStart)
             {
-
                 ClientCard target = null;
+                foreach (ClientCard card in Enemy.GetSpells())
+                {
+                    if (card != null && !card.IsShouldNotBeTarget())
+                    {
+                        target = card;
+                    }
+                }
+                if (target != null)
+                {
+                    AI.SelectCard(target);
+                    return true;
+                }
+
                 List<ClientCard> enemy_monsters = Enemy.GetMonsters();
                 foreach(ClientCard card in enemy_monsters)
                 {
@@ -170,39 +178,12 @@ namespace WindBot.Game.AI.Decks
                         target = card;
                     }
                 }
-                Console.WriteLine("测试。。。1");
                 if (target != null)
                 {
-               
-                    Console.WriteLine(target.GetOriginCode());
-                   
-                    AI.SelectCard(target);
-
-                    if (AI.HaveSelectedCards())
-                    {
-                        Console.WriteLine("已选择");
-                    }else{
-                        Console.WriteLine("未选择");
-                    }
+                    AI.SelectCard(Util.GetBestEnemyCard(false, true));
                     return true;
                 }
                 
-                Console.WriteLine("测试。。。2");
-                foreach (ClientCard card in Enemy.GetSpells())
-                {
-                    if (card != null && !card.IsShouldNotBeTarget())
-                    {
-                        target = card;
-                    }
-                }
-
-                Console.WriteLine("测试。。。3");
-                if (target != null)
-                {
-                    
-                    AI.SelectCard(target);
-                    return true;
-                }
                 return false;
             }
             else{
@@ -210,7 +191,6 @@ namespace WindBot.Game.AI.Decks
                     return false;
                 }
             }
-            Console.WriteLine("测试。。。4");
             return DefaultField();
         }
 
@@ -322,21 +302,6 @@ namespace WindBot.Game.AI.Decks
         public bool CheckNumber41(ClientCard card)
         {
             return card != null && card.IsFaceup() && card.IsCode(CardId.Number41BagooskatheTerriblyTiredTapir) && card.IsDefense() && !card.IsDisabled();
-        }
-
-        public void SelectNibiruPosition()
-        {
-            int totalAttack = Bot.GetMonsters().Where(card => card.IsFaceup()).Sum(m => (int?)m.Attack) ?? 0;
-            totalAttack += Enemy.GetMonsters().Where(card => card.IsFaceup()).Sum(m => (int?)m.Attack) ?? 0;
-            Logger.DebugWriteLine("Nibiru token attack: " + totalAttack.ToString());
-            if (totalAttack >= 3000)
-            {
-                AI.SelectPosition(CardPosition.FaceUpDefence);
-                AI.SelectPosition(CardPosition.FaceUpDefence);
-            } else {
-                AI.SelectPosition(CardPosition.FaceUpAttack);
-                AI.SelectPosition(CardPosition.FaceUpAttack);
-            }
         }
 
         /// <summary>
