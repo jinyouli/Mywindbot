@@ -76,6 +76,7 @@ namespace WindBot.Game.AI.Decks
             AddExecutor(ExecutorType.SpSummon, CardId.HuaishouQiailu , HuaishouSpsummon);
             AddExecutor(ExecutorType.SpSummon, CardId.Huaishoulongwang , HuaishouSpsummon);
             AddExecutor(ExecutorType.SpSummon, CardId.OldMan , HuaishouSpsummon);
+            AddExecutor(ExecutorType.SpSummon, CardId.Yuwuguirinv, CanXyzSummon);
 
             AddExecutor(ExecutorType.Summon);
             AddExecutor(ExecutorType.Summon, CardId.MaxxC, NoSummon);
@@ -84,6 +85,18 @@ namespace WindBot.Game.AI.Decks
             AddExecutor(ExecutorType.Summon, CardId.HuaishouQiailu, NoSummon);
             AddExecutor(ExecutorType.Summon, CardId.Huaishoulongwang, NoSummon);
 
+        }
+
+        private bool CanXyzSummon()
+        {
+            List<ClientCard> botMonsters = Bot.GetMonsters().Where(card => card.EquipCards.Count == 0).ToList();
+
+            if (botMonsters.Count >= 2) {
+                AI.SelectCard(botMonsters);
+                return true;
+            }
+
+            return false;
         }
 
         private bool HuaishouSpsummon()
