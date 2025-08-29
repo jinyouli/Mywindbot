@@ -89,10 +89,20 @@ namespace WindBot.Game.AI.Decks
 
         private bool CanXyzSummon()
         {
-            List<ClientCard> botMonsters = Bot.GetMonsters().Where(card => card.EquipCards.Count == 0).ToList();
+            List<ClientCard> material_list = new List<ClientCard>();
+            List<ClientCard> monsters = Bot.GetMonsters();
 
-            if (botMonsters.Count >= 2) {
-                AI.SelectCard(botMonsters);
+            foreach(ClientCard t in monsters)
+            {
+                if (t.EquipCards.Count == 0)
+                {
+                    material_list.Add(t);
+                    break;
+                }
+            }
+            
+            if (material_list.Count >= 2) {
+                AI.SelectMaterials(material_list);
                 return true;
             }
 

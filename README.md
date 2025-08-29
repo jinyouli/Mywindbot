@@ -1,4 +1,5 @@
 # WindBot
+（手机版可以通过visual studio编译后，通过模拟器winlator启动，ygo建立主机连机）
 
 A C# bot for [YGOPro](https://github.com/Fluorohydride/ygopro), compatible with the [YGOSharp](https://github.com/IceYGO/ygosharp) and [SRVPro](https://github.com/mycard/srvpro) server.
 
